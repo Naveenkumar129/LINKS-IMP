@@ -13,6 +13,22 @@ https://github.com/yzgqy/train-ticket-master/tree/284b0cee2d2dff3d2786cf9c632362
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Properties:  
 var vHost = "https://MGMT:5554/mgmt/status/default/MemoryStatus";  
 var vLogCategory = {'category':'GetStatCategory'};  
