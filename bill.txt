@@ -1,17 +1,19 @@
-<!-- filter.xsl -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+<!-- modify_biller_id.xsl -->
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:biller="http://sadad.com/schema/Bill/1.0" xmlns:com="http://sadad.com/schema/Common/1.0">
     <xsl:output method="xml" indent="yes" />
-    
-    <xsl:template match="/soap:Envelope">
-        <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-            <soap:Body>
-                <xsl:apply-templates select="soap:Body/data[age &gt; 25]" />
-            </soap:Body>
-        </soap:Envelope>
+
+    <!-- Identity transformation for elements other than biller:BillerId -->
+    <xsl:template match="node() | @*">
+        <xsl:copy>
+            <xsl:apply-templates select="node() | @*" />
+        </xsl:copy>
     </xsl:template>
-    
-    <xsl:template match="data">
-        <xsl:copy-of select="." />
+
+    <!-- Modify biller:BillerId -->
+    <xsl:template match="biller:BillerId">
+        <xsl:copy>
+            <xsl:text>989999998</xsl:text>
+        </xsl:copy>
     </xsl:template>
-    
+
 </xsl:stylesheet>
