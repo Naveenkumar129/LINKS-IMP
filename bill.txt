@@ -1,19 +1,13 @@
-<!-- modify_biller_id.xsl -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:biller="http://sadad.com/schema/Bill/1.0" xmlns:com="http://sadad.com/schema/Common/1.0">
-    <xsl:output method="xml" indent="yes" />
+// Read the file content
+var filePath = '/path/to/your/file.txt';
+var fileContent = fs.readFile(filePath);
 
-    <!-- Identity transformation for elements other than biller:BillerId -->
-    <xsl:template match="node() | @*">
-        <xsl:copy>
-            <xsl:apply-templates select="node() | @*" />
-        </xsl:copy>
-    </xsl:template>
+// Encode the file content as Base64
+var encodedContent = fs.encodeBase64(fileContent);
 
-    <!-- Modify biller:BillerId -->
-    <xsl:template match="biller:BillerId">
-        <xsl:copy>
-            <xsl:text>989999998</xsl:text>
-        </xsl:copy>
-    </xsl:template>
+// Create the MIME message
+var mimeMessage = 'Content-Type: application/octet-stream\r\n';
+mimeMessage += 'Content-Disposition: attachment; filename="file.txt"\r\n\r\n';
+mimeMessage += encodedContent;
 
-</xsl:stylesheet>
+// Now you can use the 'mimeMessage' as part of your request or message
