@@ -11,3 +11,11 @@ mimeMessage += 'Content-Disposition: attachment; filename="file.txt"\r\n\r\n';
 mimeMessage += encodedContent;
 
 // Now you can use the 'mimeMessage' as part of your request or message
+console.log("Starting...");
+
+const start = Date.now();
+while (Date.now() - start < 5000) {
+  // This loop does nothing for 5 seconds
+}
+
+console.log("After 5 seconds, this will be executed.");
