@@ -13,9 +13,22 @@ mimeMessage += encodedContent;
 // Now you can use the 'mimeMessage' as part of your request or message
 console.log("Starting...");
 
-const start = Date.now();
-while (Date.now() - start < 5000) {
-  // This loop does nothing for 5 seconds
+const start ppppp
+
+var delayInSeconds = 5; // Adjust this value to set your desired delay in seconds
+
+// Calculate the delay in milliseconds
+var delayInMilliseconds = delayInSeconds * 1000;
+
+// Sleep function to introduce a delay
+function sleep(ms) {
+  var start = new Date().getTime();
+  while (new Date().getTime() - start < ms) {}
 }
 
-console.log("After 5 seconds, this will be executed.");
+console.log("Starting...");
+
+// Introduce a delay of 'delayInMilliseconds' milliseconds
+sleep(delayInMilliseconds);
+
+console.log("After " + delayInSeconds + " seconds, this will be executed.");
