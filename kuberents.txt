@@ -1,5 +1,5 @@
 https://github.com/ruanbekker/terraformfiles/tree/master/aws-ec2-instance
-
+https://github.com/purbon/kafka-mrc-playbook/blob/main/docker-compose.yml
 ---
 title: kubectl Cheat Sheet
 reviewers:
