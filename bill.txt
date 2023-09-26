@@ -1,3 +1,24 @@
+Help
+File Edit ormat V ew
+Jsk@texas6
+export KAFKA_OPTS--Djava.security.auth.login.config-dev_producer_ jaas.conf
+export BootstrapBrokerStringĪls2-"b-1.efos-kafka-dev2.dss95y.c3.kafka.ap-east-
+1.amazonaws.com:9096,b-2.efos-kafka-dev2.dss95y.c3.kafka.ap-east-1.amazonaws.com:9096"
+kafka _2.12-2.7.0/bin/kafka-topics.sh --bootstrap-server $BootstrapBrokerStringTls2
+ommand-config client_sasl.properties --replication-factor 2 --partitions 1 --create
+topic topic vi watchlist request
+xport KAFKA OPTS=-Djava.securityauth.login.config-dev_producer_ jaas.conf
+export BootstrapBrokerStringTls2-"b-1.efos-kafka-dev2.dss95y.c3.kafka.ap-east
+1.amazonaws com:9096,b-2.efos-kafka-dev2.dss95y.c3.kafka.ap-east-1.amazonaws.com:9096"
+kafka_2.12-2.7.0/bin/kafka-topics.sh --bootstrap-server $BootstrapBrokerStringTls2
+command-config client_sasl.properties --replication-factor 2 --partitions 1 --delete
+topic topic v watchlist request
+kafka 2.12-2] 0/bin/kafka-topics.sh --bootstrap-server $BootstrapBrokerStringTls2
+ommand-config client_sasl.properties --replication-factor 2 --partitions 1 --delete
+opic txStreamingiesposne
+
+
+
 // Read the file content
 var filePath = '/path/to/your/file.txt';
 var fileContent = fs.readFile(filePath);
