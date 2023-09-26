@@ -1,6 +1,4 @@
-Help
-File Edit ormat V ew
-Jsk@texas6
+
 export KAFKA_OPTS--Djava.security.auth.login.config-dev_producer_ jaas.conf
 export BootstrapBrokerStringĪls2-"b-1.efos-kafka-dev2.dss95y.c3.kafka.ap-east-
 1.amazonaws.com:9096,b-2.efos-kafka-dev2.dss95y.c3.kafka.ap-east-1.amazonaws.com:9096"
