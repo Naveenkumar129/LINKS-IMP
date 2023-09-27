@@ -1,3 +1,5 @@
+https://github.com/confluentinc/examples/blob/7bbd29d6bcb85a09fea67dbf15dc2f085e2ff067/multiregion/scripts/create-topics.sh#L14
+
 https://github.com/ruanbekker/terraformfiles/tree/master/aws-ec2-instance
 https://github.com/purbon/kafka-mrc-playbook/blob/main/docker-compose.yml
 ---
