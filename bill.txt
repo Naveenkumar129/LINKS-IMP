@@ -1,4 +1,92 @@
 
+# Define your AWS provider configuration
+provider "aws" {
+  region = "us-east-1"  # Replace with your desired AWS region
+}
+
+# Create a VPC, subnets, security groups, IAM roles, etc.
+# ...
+
+# Create Kafka brokers and ZooKeeper nodes using EC2 instances
+resource "aws_instance" "kafka_broker" {
+  count         = 3
+  # Define Kafka broker instance configurations here
+}
+
+resource "aws_instance" "zookeeper" {
+  count         = 2
+  # Define ZooKeeper instance configurations here
+}
+
+# Define shell scripts for managing topics
+locals {
+  create_topic_script = <<-EOT
+    #!/bin/bash
+    KAFKA_HOME=/path/to/kafka  # Set to the Kafka installation directory
+    ZOOKEEPER_CONNECT=zookeeper1:2181,zookeeper2:2181  # Replace with your ZooKeeper connection string
+    TOPIC_NAME=$1
+    
+    ${KAFKA_HOME}/bin/kafka-topics.sh --create --topic ${TOPIC_NAME} --partitions 3 --replication-factor 2 --zookeeper ${ZOOKEEPER_CONNECT}
+  EOT
+
+  delete_topic_script = <<-EOT
+    #!/bin/bash
+    KAFKA_HOME=/path/to/kafka  # Set to the Kafka installation directory
+    ZOOKEEPER_CONNECT=zookeeper1:2181,zookeeper2:2181  # Replace with your ZooKeeper connection string
+    TOPIC_NAME=$1
+    
+    ${KAFKA_HOME}/bin/kafka-topics.sh --delete --topic ${TOPIC_NAME} --zookeeper ${ZOOKEEPER_CONNECT}
+  EOT
+}
+
+# Execute create_topic.sh on one of the Kafka broker instances
+resource "null_resource" "create_topic" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo '${local.create_topic_script}' > /tmp/create_topic.sh",
+      "chmod +x /tmp/create_topic.sh",
+      "/tmp/create_topic.sh my_topic",  # Replace my_topic with the topic name
+    ]
+    
+    connection {
+      host        = element(aws_instance.kafka_broker.*.private_ip, 0)  # Use the first Kafka broker
+      type        = "ssh"
+      user        = "ec2-user"  # Adjust as needed
+      private_key = file("/path/to/your/key.pem")  # Replace with your SSH private key
+    }
+  }
+}
+
+# Execute delete_topic.sh on one of the Kafka broker instances
+resource "null_resource" "delete_topic" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo '${local.delete_topic_script}' > /tmp/delete_topic.sh",
+      "chmod +x /tmp/delete_topic.sh",
+      "/tmp/delete_topic.sh my_topic_to_delete",  # Replace my_topic_to_delete with the topic name to delete
+    ]
+    
+    connection {
+      host        = element(aws_instance.kafka_broker.*.private_ip, 0)  # Use the first Kafka broker
+      type        = "ssh"
+      user        = "ec2-user"  # Adjust as needed
+      private_key = file("/path/to/your/key.pem")  # Replace with your SSH private key
+    }
+  }
+}
+
+# Define outputs or additional configurations as needed
+--------
+
+
 export KAFKA_OPTS--Djava.security.auth.login.config-dev_producer_ jaas.conf
 export BootstrapBrokerStringĪls2-"b-1.efos-kafka-dev2.dss95y.c3.kafka.ap-east-
 1.amazonaws.com:9096,b-2.efos-kafka-dev2.dss95y.c3.kafka.ap-east-1.amazonaws.com:9096"
