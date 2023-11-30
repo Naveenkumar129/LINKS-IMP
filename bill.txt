@@ -1,3 +1,5 @@
+https://github.com/shanewillcocks/venafi_api_integration/blob/main/generate_cert.yml
+https://github.com/Venafi/ansible-collection-venafi/tree/main
 
 # Define your AWS provider configuration
 provider "aws" {
