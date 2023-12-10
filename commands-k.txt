@@ -1,0 +1,28 @@
+# Start Schema Registry and Control Center
+#sudo systemctl start schemaregistry
+#sudo systemctl status schemaregistry
+#sudo systemctl start controlcenter
+#sudo systemctl status controlcenter
+
+# make server rebootable
+sudo systemctl enable schemaregistry
+sudo systemctl enable controlcenter
+# disable
+sudo systemctl disable schemaregistry
+sudo systemctl disable controlcenter
+
+# Schema Registry
+vi /home/ubuntu/software/confluent/etc/schema-registry/schema-registry.properties
+listeners=http://0.0.0.0:8081
+host.name=192.168.178.83
+kafkastore.bootstrap.servers=PLAINTEXT://192.168.178.80:9092,PLAINTEXT://192.168.178.81:9092,PLAINTEXT://192.168.178.82:9092
+kafkastore.topic=_schemas
+kafkastore.topic.replication.factor=1
+debug=false
+
+confluent-rebalancer execute --throttle 1000000 --bootstrap-server <hostname>:<port> --remove-broker-ids <broker.id>
+kafka-topics --bootstrap-server <hostname>:<port> --describe --under-replicated-partitions
+kafka-topics --bootstrap-server <hostname>:<port> --describe --unavailable-partitions
+confluent-rebalancer execute --throttle 1000000 --bootstrap-server <hostname>:<port>
+bin/kafka-server-stop
+bin/kafka-server-start config/server.properties
