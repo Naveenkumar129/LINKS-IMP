@@ -9,7 +9,70 @@ https://github.com/Venafi/ansible-collection-venafi/tree/main
 provider "aws" {
   region = "us-east-1"  # Replace with your desired AWS region
 }
+----
 
+
+vim bin/kafka-console-consumer-alice.sh
+exec $(dirname $0)/kafka-run-class.sh -Djava.security.auth.login.config=$(dirname $0)/../config/kafka_client_jaas_alice.conf kafka.tools.ConsoleConsumer "$@"
+
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2182 --add --allow-principal User:alice --operation All --topic xiaoming
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2182 --add --allow-principal User:alice --operation All --group test-consumer-group
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2182 --add --allow-principal User:alice --operation All --group apple-group-03
+
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2182 --list
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=localhost:2182 --remove --allow-principal User:alice --operation Read --topic xiaoming --allow-host *
+
+./bin/kafka-console-producer-alice.sh --broker-list 192.168.197.128:9092 --topic xiaoming --producer.config config/producer.properties
+./bin/kafka-console-consumer-alice.sh --bootstrap-server 192.168.197.128:9092 --from-beginning --topic xiaoming --consumer.config config/consumer.properties
+
+
+
+./bin/kafka-configs.sh --zookeeper localhost:2182 --alter --add-config 'SCRAM-SHA-256=[iterations=8192,password=alice-s…
+./bin/kafka-configs.sh --zookeeper localhost:2182 --alter --add-config 'SCRAM-SHA-256=[password=admin-secret],SCRAM-SHA…
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=loca…
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=loca…
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=loca…
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=loca…
+./bin/kafka-acls.sh --authorizer kafka.security.auth.SimpleAclAuthorizer --authorizer-properties zookeeper.connect=loc
+
+
+---
+Add an ACL to Give `kafkauser` Read and Write Access to the `inventory_purchases` Topic
+
+Create the ACL.
+kafka-acls --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:kafkauser --operation read --operation write --topic inventory_purchases
+Verify that the read access works by consuming from the topic.
+kafka-console-consumer --bootstrap-server zoo1:9093 --topic inventory_purchases --from-beginning --consumer.config client-ssl.properties
+Verify that the write access works by writing data to the topic.
+kafka-console-producer --broker-list zoo1:9093 --topic inventory_purchases --producer.config client-ssl.properties
+
+
+Remove All Existing ACLs for the `member_signups` Topic
+
+List the ACLs for the topic.
+kafka-acls --authorizer-properties zookeeper.connect=localhost:2181 --topic member_signups --list
+Remove the existing ACL for the topic.
+kafka-acls --authorizer-properties zookeeper.connect=localhost:2181 --topic member_signups --remove
+Verify that you can read from the topic as kafkauser.
+kafka-console-consumer --bootstrap-server zoo1:9093 --topic member_signups --from-beginning --consumer.config client-ssl.properties
+
+
+# Einmal im Zookeeper Container:
+export KAFKA_OPTS="-Djava.security.auth.login.config=/etc/kafka/secrets/zookeeper_broker_client_jaas.conf"
+kafka-configs --zookeeper zk-1:2181 --describe --entity-type users
+kafka-configs --zookeeper zk-1:2181 --alter --add-config 'SCRAM-SHA-256=[password=broker-secret]' --entity-type users --entity-name broker
+kafka-configs --zookeeper zk-1:2181 --alter --add-config 'SCRAM-SHA-256=[password=metricsreporter-secret]' --entity-type users --entity-name metricsreporter
+kafka-configs --zookeeper zk-1:2181 --alter --add-config 'SCRAM-SHA-256=[password=c3-secret]' --entity-type users --entity-name c3
+kafka-configs --zookeeper zk-1:2181 --alter --add-config 'SCRAM-SHA-256=[password=kafkaclient-secret]' --entity-type users --entity-name kafkaclient
+kafka-configs --zookeeper zk-1:2181 --describe --entity-type users
+
+# Wenn der User (hier kafkaclient) kein Super-User ist und alle Rechte bekommen soll
+kafka-acls --authorizer-properties zookeeper.connect=zk-1:2181 --list
+kafka-acls --authorizer-properties zookeeper.connect=zk-1:2181 --add --cluster --allow-principal User:kafkaclient --operation All --topic '*' --group '*'
+kafka-acls --authorizer-properties zookeeper.connect=zk-1:2181 --add --cluster --allow-principal User:c3 --operation All --topic '*' --group '*'
+
+
+---
 # Create a VPC, subnets, security groups, IAM roles, etc.
 # ...
 
