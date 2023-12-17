@@ -10,7 +10,9 @@ provider "aws" {
   region = "us-east-1"  # Replace with your desired AWS region
 }
 ----
-
+Enable monitoring on partition health, especially for unhealthy partitions. You mentioned using Splunk for monitoring.
+bin/kafka-leader-election.sh --bootstrap-server 127.0.0.1:9093 --admin.config
+config/consumer.properties --topic Correlation-Store --partition 19 --election-type UNCLEAN
 
 vim bin/kafka-console-consumer-alice.sh
 exec $(dirname $0)/kafka-run-class.sh -Djava.security.auth.login.config=$(dirname $0)/../config/kafka_client_jaas_alice.conf kafka.tools.ConsoleConsumer "$@"
