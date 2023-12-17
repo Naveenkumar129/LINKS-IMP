@@ -87,19 +87,25 @@ These commands are attempting to initiate an unclean leader election for the spe
 ------
 num.network.threads
 
-Create a Processor to process the number of network request threads. It is recommended to set it to the current number of CPU cores of the Broker * 2. If this value is too low, the network idleness will often be too low and replicas will be missing.
+Create a Processor to process the number of network request threads. It is recommended to set it to the current number
+of CPU cores of the Broker * 2. If this value is too low, the network idleness will often be too low and replicas will
+be missing.
 
 num.io.threads
 
-Create a KafkaRequestHandler to handle the specific number of request threads. It is recommended to set it to the number of Broker disks * 2.
+Create a KafkaRequestHandler to handle the specific number of request threads. It is recommended to set it to the number 
+of Broker disks * 2.
 
 num.replica.fetchers
 
-It is recommended to set it to the number of CPU cores/4. Appropriate increase can improve the CPU utilization and the parallelism of Follower synchronization Leader data.
+It is recommended to set it to the number of CPU cores/4. Appropriate increase can improve the CPU utilization and
+the parallelism 
+of Follower synchronization Leader data.
 
 compression.type
 
-It is recommended to use the lz4 compression type. Compression can improve CPU utilization and reduce the amount of data transmitted over the network.
+It is recommended to use the lz4 compression type. Compression can improve CPU utilization and reduce the amount of 
+data transmitted over the network.
 
 log.flush.xxx log.flush.scheduler.interval.ms
 
@@ -107,7 +113,9 @@ log.flush.interval.ms
 
 log.flush.interval.messages
 
-These parameters represent the strategy for flushing log data to the disk. The default configuration should be maintained. The flushing strategy is completed by the operating system, which decides when to flush the data. If this parameter is set, it may affect the throughput. Very big
+These parameters represent the strategy for flushing log data to the disk. The default configuration should be maintained. 
+The flushing strategy is completed by the operating system, which decides when to flush the data. If this parameter is set,
+it may affect the throughput. Very big
 
 
 # Create a VPC, subnets, security groups, IAM roles, etc.
