@@ -117,6 +117,26 @@ These parameters represent the strategy for flushing log data to the disk. The d
 The flushing strategy is completed by the operating system, which decides when to flush the data. If this parameter is set,
 it may affect the throughput. Very big
 
+-----------
+Several scenarios that trigger partition leader election:
+
+Offline：
+
+Create a new partition or a partition loses its existing leader
+
+Reassign：
+
+User performs reallocation operation
+
+PreferredReplica：
+
+Migrate the leader back to the preferred replica
+
+ControlledShutdown：
+
+The existing leader of the partition is about to go offline
+
+---------------
 
 # Create a VPC, subnets, security groups, IAM roles, etc.
 # ...
