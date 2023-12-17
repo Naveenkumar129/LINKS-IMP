@@ -73,8 +73,43 @@ kafka-acls --authorizer-properties zookeeper.connect=zk-1:2181 --list
 kafka-acls --authorizer-properties zookeeper.connect=zk-1:2181 --add --cluster --allow-principal User:kafkaclient --operation All --topic '*' --group '*'
 kafka-acls --authorizer-properties zookeeper.connect=zk-1:2181 --add --cluster --allow-principal User:c3 --operation All --topic '*' --group '*'
 
+-----------
 
+Mitigation: Monitor disk I/O metrics and consider using high-performance storage solutions. Optimize Kafka configuration, such as adjusting batch sizes and compression settings.
 ---
+
+For the "multi-region-async" topic, partition 0:
+docker compose exec broker-east-4 kafka-leader-election --bootstrap-server broker-east-4:19094 --election-type UNCLEAN --topic multi-region-async --partition 0
+
+For the "multi-region-default" topic, partition 0:
+docker compose exec broker-east-4 kafka-leader-election --bootstrap-server broker-east-4:19094 --election-type UNCLEAN --topic multi-region-default --partition 0
+These commands are attempting to initiate an unclean leader election for the specified topics and partitions on the Kafka broker running on broker-east-4 with the given bootstrap server and election type.
+------
+num.network.threads
+
+Create a Processor to process the number of network request threads. It is recommended to set it to the current number of CPU cores of the Broker * 2. If this value is too low, the network idleness will often be too low and replicas will be missing.
+
+num.io.threads
+
+Create a KafkaRequestHandler to handle the specific number of request threads. It is recommended to set it to the number of Broker disks * 2.
+
+num.replica.fetchers
+
+It is recommended to set it to the number of CPU cores/4. Appropriate increase can improve the CPU utilization and the parallelism of Follower synchronization Leader data.
+
+compression.type
+
+It is recommended to use the lz4 compression type. Compression can improve CPU utilization and reduce the amount of data transmitted over the network.
+
+log.flush.xxx log.flush.scheduler.interval.ms
+
+log.flush.interval.ms
+
+log.flush.interval.messages
+
+These parameters represent the strategy for flushing log data to the disk. The default configuration should be maintained. The flushing strategy is completed by the operating system, which decides when to flush the data. If this parameter is set, it may affect the throughput. Very big
+
+
 # Create a VPC, subnets, security groups, IAM roles, etc.
 # ...
 
