@@ -1,3 +1,5 @@
+https://medium.com/@TimvanBaarsen/apache-kafka-cli-commands-cheat-sheet-a6f06eac01b#477b
+
 https://github.com/purbon/kafka-mrc-playbook/blob/main/scripts/introduce-big-latency.sh
 https://github.com/confluentinc/examples/blob/7bbd29d6bcb85a09fea67dbf15dc2f085e2ff067/multiregion/scripts/create-topics.sh#L14
 https://github.com/janedeng/reassign-replica-placement-from-adb
