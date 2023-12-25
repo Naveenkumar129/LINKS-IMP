@@ -118,6 +118,17 @@ The flushing strategy is completed by the operating system, which decides when t
 it may affect the throughput. Very big
 
 -----------
+
+provisioner "remote-exec" {
+    inline = [
+      "sudo systemctl daemon-reload",
+      "sudo systemctl enable zookeeper",
+      "sudo systemctl restart zookeeper"
+
+"sudo systemctl daemon-reload",
+      "sudo systemctl enable kafka",
+      "sudo systemctl restart kafka"
+-----------
 Several scenarios that trigger partition leader election:
 
 Offline：
