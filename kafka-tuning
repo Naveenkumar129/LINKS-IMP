@@ -1,3 +1,26 @@
+Loss of an EBS volume
+start producing messages and observing topic
+detach EBS volume
+check Kafka Broker
+check producer / consumer / partitions
+terminate Kafka instance
+recreate EBS and EC2
+check after recreation of EBS and EC2
+
+
+ /kafka/etc/producer-saslssl.properties :
+security.protocol=SASL_SSL
+sasl.mechanism=PLAIN
+ssl.truststore.location=/kafka/ssl/kafka.client.truststore.jks
+ssl.truststore.password=<<grab-from-1password>>
+bootstrap.servers=kafka-0.some.domain:9095,kafka-1.some.domain:9095,kafka-2.some.domain:9095
+
+
+SASL_PLAINTEXT for Kafka Brokers
+SASL_SSL connection to Kafka Brokers
+SASL between Zookeeper servers
+
+---
 DR
 https://github.com/hiimivantang/kafka-dr-runbook-example/blob/03ea0c1b27f618fea8799259df47a326cefbacfa/steps/start_broker.adoc
 https://docs.confluent.io/platform/current/kafka/rebalancer/index.html#decommissioning-brokers
