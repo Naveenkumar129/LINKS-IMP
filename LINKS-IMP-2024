@@ -2,6 +2,11 @@ https://github.com/bregman-arie/devops-exercises/blob/895ac0f15530d3047f95d6dfac
 https://github.com/bregman-arie/devops-exercises/tree/master/topics/aws/exercises
 https://github.com/antonputra/tutorials/tree/235cb18a078e5c499b32cfa3a9448995e414042a/lessons/020
 
+kraft
+https://github.com/confluentinc/cp-ansible/blob/7.6.0-post/docs/sample_inventories/sasl_ssl_kraft.yml
+
+----
+
 # Default DNS resolution (us-west-2)
 export BOOTSTRAP=lkc-oq77vj.dom8w13j4p7.us-west-2.aws.confluent.cloud
 https://lkc-oq77vj.dom8w13j4p7.us-west-2.aws.confluent.cloud:443
