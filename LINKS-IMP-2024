@@ -6,6 +6,9 @@ kraft
 https://github.com/confluentinc/cp-ansible/blob/7.6.0-post/docs/sample_inventories/sasl_ssl_kraft.yml
 
 ----
+terraform plan -target="module.aws-network-vpc-r1" -target="module.aws-network-vpc-r2"
+terraform apply -target="module.aws-network-vpc-r1" -target="module.aws-network-vpc-r2"
+----
 
 # Default DNS resolution (us-west-2)
 export BOOTSTRAP=lkc-oq77vj.dom8w13j4p7.us-west-2.aws.confluent.cloud
