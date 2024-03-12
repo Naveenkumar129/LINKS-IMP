@@ -3,6 +3,11 @@ https://github.com/bregman-arie/devops-exercises/tree/master/topics/aws/exercise
 https://github.com/antonputra/tutorials/tree/235cb18a078e5c499b32cfa3a9448995e414042a/lessons/020
 https://github.com/btkrausen/hashicorp/blob/master/terraform/Lab%20Prerequisites/Section%2004%20-%20Understand%20Terraform%20Basics/Terraform%20Configuration%20Block/main.tf
 
+mrc
+https://github.com/AlexRogalskiy/examples-1/blob/4a43cf25f9de4e694829f1497bb23160a2e53f71/multiregion/docs/multiregion.rst   --russina
+https://github.com/justinrlee/terraform-templates/blob/708e8b997c3b9ccd4a9b11ebfb6f75e088148d69/multi-region-vpc/terraform.tfvars#L10  --chi
+
+
 kraft
 https://github.com/confluentinc/cp-ansible/blob/7.6.0-post/docs/sample_inventories/sasl_ssl_kraft.yml
 
